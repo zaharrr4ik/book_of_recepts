@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Галерея блюд с превью изображений -->
+<div class="header" style="margin-bottom: 30px;">
+    <h1 style="font-size: 36px; color: #FF8C00; margin-bottom: 20px;">Галерея блюд</h1>
+    <div style="display: flex; gap: 15px; margin-bottom: 30px;">
+        <a href="{{ url_for('index') }}" class="dish-btn">Вернуться к списку</a>
+    </div>
+</div>
+
+{% if dishes %}
+<!-- Сетка с блюдами -->
+<div class="gallery">
+    {% for dish in dishes %}
+    <div class="gallery-item" onclick="window.location='{{ url_for('view_dish', dish_id=dish.id) }}'">
+        <img src="{{ url_for('static', filename='uploads/' + dish.photo) }}"
+             alt="{{ dish.name }}"
+             class="gallery-img">
+        <div class="gallery-info">
+            <h3 style="color: #FF8C00; margin: 0 0 5px 0;">{{ dish.name }}</h3>
+            <p style="color: #666; margin: 0;">Автор: {{ dish.author.username }}</p>
+            {% if dish.calories %}
+            <p style="color: #666; margin: 5px 0 0;">{{ dish.calories }} ккал</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div style="text-align: center; padding: 40px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    <p style="font-size: 18px; color: #666;">Нет блюд с фотографиями</p>
+    <a href="/add" class="dish-btn" style="margin-top: 20px;">Добавить блюдо с фото</a>
+</div>
+<!-- Сообщение, если блюд нет -->
+{% endif %}
+{% endblock %}

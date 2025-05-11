@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Страница с результатами поиска -->
+<div class="content-box">
+    <h2 style="color: #FF8C00;">Результаты поиска</h2>
+
+    {% if dishes %}
+        {% for dish in dishes %}
+            <div class="dish">
+                <h3>{{ dish.name }}</h3>
+                <p>{{ dish.ingredients|truncate(100) }}</p>
+                <a href="{{ url_for('view_dish', dish_id=dish.id) }}">Подробнее</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Ничего не найдено</p>
+    {% endif %}
+</div>
+{% endblock %}

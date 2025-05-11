@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Основная форма добавления нового блюда -->
+<div style="max-width: 800px; margin: 0 auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+    <h1 style="text-align: center; color: #FF8C00;">Добавить новое блюдо</h1>
+    <!-- Форма с полями для ввода данных о блюде -->
+    <form method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 20px;">
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Название блюда:</label>
+            <input type="text" name="name" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Фото блюда (JPEG/PNG):</label>
+            <input type="file" name="photo" accept="image/*" required style="width: 100%;">
+        </div>
+
+        <!-- Новое поле для аудио -->
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Аудио-рецепт (MP3/WAV):</label>
+            <input type="file" name="audio" accept="audio/*" style="width: 100%;">
+        </div>
+
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Ингредиенты (через запятую):</label>
+            <textarea name="ingredients" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; min-height: 100px;"></textarea>
+        </div>
+
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Рецепт (каждый шаг с новой строки):</label>
+            <textarea name="recipe_steps" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; min-height: 150px;"></textarea>
+        </div>
+
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: bold;">Количество калорий (необязательно):</label>
+            <input type="number" name="calories" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
+
+        <button type="submit" style="background-color: #FF8C00; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: background-color 0.3s;">
+            Сохранить блюдо
+        </button>
+    </form>
+</div>
+{% endblock %}

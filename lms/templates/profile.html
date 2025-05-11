@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Страница с блюдами текущего пользователя -->
+<div class="header" style="margin-bottom: 30px;">
+    <h1 style="font-size: 36px; color: #FF8C00; margin-bottom: 20px;">Мои блюда</h1>
+    <div style="display: flex; gap: 15px; margin-bottom: 30px;">
+        <a href="/add" class="dish-btn">Добавить блюдо</a>
+        <a href="{{ url_for('index') }}" class="dish-btn">Общий каталог</a>
+        <a href="{{ url_for('user_profile', username=current_user.username) }}" class="dish-btn">Мои блюда</a>
+    </div>
+</div>
+
+{% for dish in dishes %}
+<!-- Карточка блюда с кнопкой удаления -->
+<div class="dish" onclick="window.location='{{ url_for('view_dish', dish_id=dish.id) }}'">
+    <form action="{{ url_for('delete_dish', dish_id=dish.id) }}" method="POST"
+          style="position: absolute; top: 10px; right: 10px;"
+          onclick="event.stopPropagation()">
+        <button type="submit" class="dish-btn" style="background-color: #ff4444; padding: 8px 15px; font-size: 14px;">Удалить</button>
+    </form>
+
+    <h2 style="color: #FF8C00; margin-top: 0; font-size: 24px;">{{ dish.name }}</h2>
+
+    {% if dish.photo %}
+    <img src="{{ url_for('static', filename='uploads/' + dish.photo) }}" alt="{{ dish.name }}"
+         style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+    {% endif %}
+
+    {% if dish.calories %}
+    <p style="margin-bottom: 10px;"><strong style="color: #555;">Калории:</strong> <span style="color: #FF8C00; font-weight: bold;">{{ dish.calories }} ккал</span></p>
+    {% endif %}
+
+    <p style="margin-bottom: 15px;"><strong style="color: #555;">Ингредиенты:</strong> {{ dish.ingredients }}</p>
+
+    <div class="recipe-steps">
+        <h3 style="margin-bottom: 10px; color: #555;">Рецепт:</h3>
+        <ol style="padding-left: 20px;">
+            {% for step in dish.recipe_steps.split('\n') if step.strip() %}
+            <li style="margin-bottom: 8px;">{{ step }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+{% else %}
+<div style="text-align: center; padding: 40px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    <p style="font-size: 18px; color: #666;">У вас пока нет добавленных блюд</p>
+    <a href="/add" class="dish-btn" style="margin-top: 20px;">Добавить первое блюдо</a>
+</div>
+{% endfor %}
+{% endblock %}
